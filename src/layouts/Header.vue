@@ -17,14 +17,14 @@ import Menubar from "primevue/menubar";
 
 const items = ref([
   {
-    label: "Currency time series",
-    icon: "pi pi-fw pi-chart-bar",
-    route: "/currency-time-series",
-  },
-  {
     label: "Currency conversion",
     icon: "pi pi-fw pi-money-bill",
     route: "/currency-conversion",
+  },
+  {
+    label: "Currency time series",
+    icon: "pi pi-fw pi-chart-bar",
+    route: "/currency-time-series",
   },
   {
     label: "Currency conversation history",
