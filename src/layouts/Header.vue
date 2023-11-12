@@ -17,19 +17,19 @@ import Menubar from "primevue/menubar";
 
 const items = ref([
   {
-    label: "Currency conversion",
+    label: "Currency Conversion",
     icon: "pi pi-fw pi-money-bill",
     route: "/currency-conversion",
   },
   {
-    label: "Currency time series",
+    label: "Currency Time Series",
     icon: "pi pi-fw pi-chart-bar",
     route: "/currency-time-series",
   },
   {
-    label: "Currency conversation history",
+    label: "Currency Conversion History",
     icon: "pi pi-fw pi-calendar",
-    route: "/currency-conversation-history",
+    route: "/currency-conversion-history",
   },
 ]);
 </script>

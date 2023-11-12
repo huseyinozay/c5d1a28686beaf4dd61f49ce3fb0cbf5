@@ -16,10 +16,9 @@ const routes = [
         component: () => import("../views/currencyTimeSeries/Index.vue"),
       },
       {
-        path: "currency-conversation-history",
-        name: "CurrencyConversationHistory",
-        component: () =>
-          import("../views/currencyConversationHistory/Index.vue"),
+        path: "currency-conversion-history",
+        name: "CurrencyConversionHistory",
+        component: () => import("../views/currencyConversionHistory/Index.vue"),
       },
     ],
   },

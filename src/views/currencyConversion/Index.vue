@@ -25,11 +25,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, inject, onMounted } from "vue";
 
 import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
+
+const http = inject("http");
+
+// onMounted(async () => {
+//   const { data } = await http.get("/exchangerates_data/symbols");
+//   console.log(data);
+// });
 
 const date = ref();
 </script>
