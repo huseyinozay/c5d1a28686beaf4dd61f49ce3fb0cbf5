@@ -17,3 +17,10 @@ const routes = [
     component: () => import("../views/currencyConversationHistory/Index.vue"),
   },
 ];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router;
