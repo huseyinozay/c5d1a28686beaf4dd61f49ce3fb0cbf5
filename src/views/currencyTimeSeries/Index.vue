@@ -34,9 +34,9 @@ import { ref } from "vue";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 import Button from "primevue/button";
-import CustomDataTable from "../../components/CustomDataTable.vue";
-import CustomChart from "../../components/CustomChart.vue";
-import { currencyTimeSeriesColumns } from "../../data/columns";
+import CustomDataTable from "@/components/CustomDataTable.vue";
+import CustomChart from "@/components/CustomChart.vue";
+import { currencyTimeSeriesColumns } from "@/data/columns";
 
 const startDate = ref();
 const endDate = ref();

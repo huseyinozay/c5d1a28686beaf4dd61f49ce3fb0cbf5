@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-import CustomDataTable from "../../components/CustomDataTable.vue";
-import { currencyConversionHistoryColumns } from "../../data/columns";
+import CustomDataTable from "@/components/CustomDataTable.vue";
+import { currencyConversionHistoryColumns } from "@/data/columns";
 </script>
