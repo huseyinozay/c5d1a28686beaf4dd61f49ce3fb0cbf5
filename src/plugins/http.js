@@ -21,7 +21,10 @@ export default {
       (error) => {
         console.error("Request error:", error);
 
-        toast.error(error.response.data.message);
+        const errorMessage = error.response.data.message
+          ? error.response.data.message
+          : error.response.data.error.message;
+        toast.error(errorMessage);
 
         return Promise.reject(error);
       }
