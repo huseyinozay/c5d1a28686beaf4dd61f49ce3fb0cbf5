@@ -10,7 +10,7 @@ export default {
     });
 
     axiosInstance.interceptors.request.use((config) => {
-      config.headers["apiKey"] = "import.meta.env.VITE_EXCHANGE_RATE_API_KEY";
+      config.headers["apiKey"] = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
       return config;
     });
 
