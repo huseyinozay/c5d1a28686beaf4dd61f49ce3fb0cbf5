@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 export default {
   install: (app) => {
@@ -7,9 +10,22 @@ export default {
     });
 
     axiosInstance.interceptors.request.use((config) => {
-      config.headers["apiKey"] = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
+      config.headers["apiKey"] = "import.meta.env.VITE_EXCHANGE_RATE_API_KEY";
       return config;
     });
+
+    axiosInstance.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        console.error("Request error:", error);
+
+        toast.error(error.response.data.message);
+
+        return Promise.reject(error);
+      }
+    );
 
     app.config.globalProperties.$http = axiosInstance;
 
