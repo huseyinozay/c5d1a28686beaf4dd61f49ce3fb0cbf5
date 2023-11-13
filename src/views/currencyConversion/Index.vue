@@ -3,40 +3,88 @@
 
   <div class="grid">
     <div class="col">
-      <Calendar v-model="date" showIcon />
+      <Calendar
+        v-model="date"
+        dateFormat="yy-mm-dd"
+        showIcon
+        :maxDate="maxDate"
+      />
     </div>
   </div>
   <div class="grid">
     <div class="col-3 col-offset-3">
-      <InputText />
+      <InputNumber v-model="fromAmount" />
+      <br />
+      <span>press enter to update the value</span>
     </div>
     <div class="col-3">
-      <Dropdown class="w-full md:w-14rem" />
+      <Dropdown
+        class="w-full md:w-14rem"
+        :options="symbols"
+        v-model="fromSymbol"
+        optionLabel="code"
+        filter
+      />
     </div>
   </div>
   <div class="grid">
     <div class="col-3 col-offset-3">
-      <InputText />
+      <InputNumber v-model="toAmount" readonly />
     </div>
     <div class="col-3">
-      <Dropdown class="w-full md:w-14rem" />
+      <Dropdown
+        class="w-full md:w-14rem"
+        :options="symbols"
+        v-model="toSymbol"
+        optionLabel="code"
+        filter
+      />
+    </div>
+  </div>
+
+  <div class="grid mt-5">
+    <div class="col">
+      <h4>{{ fromAmount }} {{ fromSymbol.name }} equals</h4>
+      <h1>{{ toAmount }} {{ toSymbol.name }}</h1>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from "vue";
+import { ref, computed, watch, inject, onMounted } from "vue";
+import { convertObjectToDropdownData, outputDateFormatted } from "@/utils.js";
 
-import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 
 const http = inject("http");
 
-// onMounted(async () => {
-//   const { data } = await http.get("/exchangerates_data/symbols");
-//   console.log(data);
-// });
+onMounted(async () => {
+  const symbolReq = await http.get("/exchangerates_data/symbols");
+  symbols.value = convertObjectToDropdownData(symbolReq.data.symbols);
+  const currencyReq = await http.get(convertUrl.value);
+  toAmount.value = currencyReq.data.result;
+});
 
 const date = ref();
+const maxDate = ref(new Date());
+const symbols = ref();
+const fromSymbol = ref({ name: "Turkish Lira", code: "TRY" });
+const toSymbol = ref({ name: "United States Dollar", code: "USD" });
+const fromAmount = ref(1);
+const toAmount = ref();
+
+const convertUrl = computed(() => {
+  return `/exchangerates_data/convert?to=${toSymbol.value.code}&from=${
+    fromSymbol.value.code
+  }&amount=${fromAmount.value}&date=${outputDateFormatted(date.value)}`;
+});
+
+watch([convertUrl, fromAmount], async ([url, currentFromAmount]) => {
+  if (fromAmount.value !== "") {
+    const { data } = await http.get(url);
+    toAmount.value = data.result;
+  }
+});
 </script>
