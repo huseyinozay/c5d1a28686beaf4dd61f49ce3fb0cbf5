@@ -21,7 +21,7 @@
       <Dropdown
         class="w-full md:w-14rem"
         :options="symbols"
-        v-model="fromSymbol"
+        v-model="fromCurrency"
         optionLabel="code"
         filter
       />
@@ -35,7 +35,7 @@
       <Dropdown
         class="w-full md:w-14rem"
         :options="symbols"
-        v-model="toSymbol"
+        v-model="toCurrency"
         optionLabel="code"
         filter
       />
@@ -44,8 +44,8 @@
 
   <div class="grid mt-5">
     <div class="col">
-      <h4>{{ fromAmount }} {{ fromSymbol.name }} equals</h4>
-      <h1>{{ toAmount }} {{ toSymbol.name }}</h1>
+      <h4>{{ fromAmount }} {{ fromCurrency.name }} equals</h4>
+      <h1>{{ toAmount }} {{ toCurrency.name }}</h1>
     </div>
   </div>
 </template>
@@ -70,14 +70,14 @@ onMounted(async () => {
 const date = ref();
 const maxDate = ref(new Date());
 const symbols = ref();
-const fromSymbol = ref({ name: "Turkish Lira", code: "TRY" });
-const toSymbol = ref({ name: "United States Dollar", code: "USD" });
+const fromCurrency = ref({ name: "Turkish Lira", code: "TRY" });
+const toCurrency = ref({ name: "United States Dollar", code: "USD" });
 const fromAmount = ref(1);
 const toAmount = ref();
 
 const convertUrl = computed(() => {
-  return `/exchangerates_data/convert?to=${toSymbol.value.code}&from=${
-    fromSymbol.value.code
+  return `/exchangerates_data/convert?to=${toCurrency.value.code}&from=${
+    fromCurrency.value.code
   }&amount=${fromAmount.value}&date=${outputDateFormatted(date.value)}`;
 });
 
