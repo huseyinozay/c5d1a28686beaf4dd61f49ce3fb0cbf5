@@ -1,7 +1,14 @@
-# Vue 3 + Vite
+For installation `npm install`
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Additionally, in order for http requests to work as expected, a file named .env must be created in the root directory and the `VITE_APP_BASE_URL` and `VITE_EXCHANGE_RATE_API_KEY` variables must be created.
 
-## Recommended IDE Setup
+The value of the VITE_APP_BASE_URL variable is constant and is `https://api.apilayer.com`.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+The value of the VITE_EXCHANGE_RATE_API_KEY variable is personal and is the api key that the system gives you when an account is created at [https://apilayer.com/marketplace/exchangerates_data-api](https://apilayer.com/marketplace/exchangerates_data-api).
+
+I am sharing my own .env file content with you so that the task can be checked.
+
+```
+VITE_APP_BASE_URL=https://api.apilayer.com
+VITE_EXCHANGE_RATE_API_KEY=WhHhTA1PVLCQnO0fcRCMbOGvVcPX53rS
+```
