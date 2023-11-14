@@ -64,12 +64,15 @@ import CustomDataTable from "@/components/CustomDataTable.vue";
 import CustomChart from "@/components/CustomChart.vue";
 import { currencyTimeSeriesColumns } from "@/data/columns";
 
+import { useToast } from "vue-toastification";
+
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 import Button from "primevue/button";
 import MultiSelect from "primevue/multiselect";
 
 const http = inject("http");
+const toast = useToast();
 
 onMounted(async () => {
   const symbolReq = await http.get("/exchangerates_data/symbols");
@@ -127,9 +130,12 @@ const minDateForEndDate = computed(() => {
 });
 
 const onClickList = async () => {
-  const { data } = await http.get(timeSeriesURl.value);
-  timeSeriesTableData.value = transformData(data);
-  console.log(timeSeriesTableData.value);
+  if (startDate.value && endDate.value) {
+    const { data } = await http.get(timeSeriesURl.value);
+    timeSeriesTableData.value = transformData(data);
+  } else {
+    toast.error("Please select start and end date");
+  }
 };
 
 const transformData = (data) => {
