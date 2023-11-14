@@ -16,7 +16,7 @@ import "primeflex/primeflex.css";
 const app = createApp(App);
 
 app.use(http);
-app.use(createPinia);
+app.use(createPinia());
 app.use(PrimeVue);
 app.use(router);
 app.use(Toast, {
