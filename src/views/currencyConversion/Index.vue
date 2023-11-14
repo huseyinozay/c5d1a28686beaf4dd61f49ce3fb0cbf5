@@ -1,5 +1,5 @@
 <template>
-  <p>Currency conversion</p>
+  <h1>Currency Conversion</h1>
 
   <div class="grid">
     <div class="col">
@@ -53,18 +53,21 @@
 <script setup>
 import { ref, computed, watch, inject, onMounted } from "vue";
 import { convertObjectToDropdownData, outputDateFormatted } from "@/utils.js";
+import { useCurrencyStore } from "@/stores/currencyStore.js";
 
 import InputNumber from "primevue/inputnumber";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 
 const http = inject("http");
+const store = useCurrencyStore();
 
 onMounted(async () => {
   const symbolReq = await http.get("/exchangerates_data/symbols");
   symbols.value = convertObjectToDropdownData(symbolReq.data.symbols);
   const currencyReq = await http.get(convertUrl.value);
   toAmount.value = currencyReq.data.result;
+  store.setCurrencyHistory(currencyReq.data);
 });
 
 const date = ref();
@@ -85,6 +88,7 @@ watch(convertUrl, async (url) => {
   if (fromAmount.value !== "") {
     const { data } = await http.get(url);
     toAmount.value = data.result;
+    store.setCurrencyHistory(data);
   }
 });
 </script>

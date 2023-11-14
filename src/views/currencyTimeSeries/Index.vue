@@ -1,5 +1,5 @@
 <template>
-  <p>Currency conversion</p>
+  <h1>Currency Conversion</h1>
 
   <div class="grid">
     <div class="col">
