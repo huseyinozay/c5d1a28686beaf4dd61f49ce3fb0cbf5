@@ -81,7 +81,7 @@ const convertUrl = computed(() => {
   }&amount=${fromAmount.value}&date=${outputDateFormatted(date.value)}`;
 });
 
-watch([convertUrl, fromAmount], async ([url, currentFromAmount]) => {
+watch(async (convertUrl) => {
   if (fromAmount.value !== "") {
     const { data } = await http.get(url);
     toAmount.value = data.result;
