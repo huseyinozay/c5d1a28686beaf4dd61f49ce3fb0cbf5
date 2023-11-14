@@ -6,7 +6,6 @@ export const useCurrencyStore = defineStore("currencyStore", () => {
 
   const setCurrencyHistory = (history) => {
     currencyHistory.value.push(transformData(history));
-    console.log(currencyHistory.value);
   };
 
   const transformData = (data) => {
