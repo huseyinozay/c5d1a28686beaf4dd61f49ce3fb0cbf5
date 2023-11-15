@@ -1,7 +1,7 @@
 <template>
   <h1>Currency Time Series</h1>
 
-  <div class="grid">
+  <div class="grid surface-50 border-round m-auto mb-2">
     <div class="col">
       <Calendar
         v-model="startDate"
@@ -44,15 +44,19 @@
       <Button @click="onClickList" label="List" />
     </div>
   </div>
-  <div class="grid">
-    <div class="col-6">
+  <div class="grid m-auto">
+    <div class="col-5 flex-1" style="margin-right: 0.25rem">
       <CustomDataTable
         :data="timeSeriesTableData"
         :columns="currencyTimeSeriesColumns"
       />
     </div>
-    <div class="col-6">
-      <Chart type="line" :data="timeSeriesChartData" class="h-30rem" />
+    <div class="col-5 flex-1 min-h-full" style="margin-left: 0.25rem">
+      <Chart
+        type="line"
+        :data="timeSeriesChartData"
+        class="w-full min-h-full"
+      />
     </div>
   </div>
 </template>
@@ -190,3 +194,11 @@ const convertToChartData = (apiResponse) => {
 //tarihlerle ilgili olan alanların tamamını iki obje(reactive) ve bir watch ile yazdım ancak her değişiklikte 101 kere watchın
 //çalışmasına sebep olduğu için daha kötü dursa da computedlar ile bu kısmı tamamladım.Vaktim olduğunda watchdaki döngü sorununun nasıl çözebileceğimi inceleyeceğim.
 </script>
+
+<style scoped>
+.flex-1 {
+  flex: 1;
+  background-color: #f9fafb;
+  border-radius: 10px;
+}
+</style>

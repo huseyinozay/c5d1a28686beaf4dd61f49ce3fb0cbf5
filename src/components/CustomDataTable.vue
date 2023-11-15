@@ -6,6 +6,7 @@
       paginator
       :rows="10"
       :rowsPerPageOptions="[10, 20, 50]"
+      stripedRows
     >
       <Column
         v-for="col of columns"

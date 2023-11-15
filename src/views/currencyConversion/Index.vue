@@ -11,34 +11,31 @@
       />
     </div>
   </div>
-  <div class="grid">
-    <div class="col-3 col-offset-3">
-      <InputNumber v-model="fromAmount" />
-      <br />
-      <span>press enter to update the value</span>
-    </div>
-    <div class="col-3">
-      <Dropdown
-        class="w-full md:w-14rem"
-        :options="symbols"
-        v-model="fromCurrency"
-        optionLabel="code"
-        filter
-      />
+  <div class="grid m-auto">
+    <div class="col-4 col-offset-4 px-8">
+      <InputGroup>
+        <InputNumber v-model="fromAmount" />
+        <Dropdown
+          :options="symbols"
+          v-model="fromCurrency"
+          optionLabel="code"
+          filter
+        />
+      </InputGroup>
     </div>
   </div>
-  <div class="grid">
-    <div class="col-3 col-offset-3">
-      <InputNumber v-model="toAmount" readonly />
-    </div>
-    <div class="col-3">
-      <Dropdown
-        class="w-full md:w-14rem"
-        :options="symbols"
-        v-model="toCurrency"
-        optionLabel="code"
-        filter
-      />
+  <span>press enter to update the value</span>
+  <div class="grid m-auto mt-4">
+    <div class="col-4 col-offset-4 px-8">
+      <InputGroup>
+        <InputNumber v-model="toAmount" readonly />
+        <Dropdown
+          :options="symbols"
+          v-model="toCurrency"
+          optionLabel="code"
+          filter
+        />
+      </InputGroup>
     </div>
   </div>
 
@@ -57,6 +54,7 @@ import { useCurrencyStore } from "@/stores/currencyStore.js";
 
 import InputNumber from "primevue/inputnumber";
 import Dropdown from "primevue/dropdown";
+import InputGroup from "primevue/inputgroup";
 import Calendar from "primevue/calendar";
 
 const http = inject("http");

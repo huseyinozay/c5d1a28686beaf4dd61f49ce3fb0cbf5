@@ -1,6 +1,6 @@
 <template>
   <h1>Currency Conversion History</h1>
-  <div class="card">
+  <div class="card px-8">
     <CustomDataTable :data="data" :columns="currencyConversionHistoryColumns" />
   </div>
 </template>

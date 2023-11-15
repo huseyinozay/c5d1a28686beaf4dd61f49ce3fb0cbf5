@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Menubar :model="items">
+    <Menubar :model="items" class="item-center">
       <template #item="{ item }">
         <router-link :to="item.route" class="p-menuitem-link">
           <i :class="item.icon"></i>
@@ -33,3 +33,10 @@ const items = ref([
   },
 ]);
 </script>
+
+<style scoped>
+.item-center {
+  display: flex;
+  justify-content: center;
+}
+</style>
