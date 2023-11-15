@@ -138,7 +138,6 @@ const onClickList = async () => {
     const { data } = await http.get(timeSeriesURl.value);
     timeSeriesTableData.value = convertTableData(data);
     timeSeriesChartData.value = convertToChartData(data);
-    console.log(timeSeriesChartData.value);
   } else {
     toast.error("Please select start and end date");
   }

@@ -19,8 +19,6 @@ export default {
         return response;
       },
       (error) => {
-        console.error("Request error:", error);
-
         const errorMessage = error.response.data.message
           ? error.response.data.message
           : error.response.data.error.message;
