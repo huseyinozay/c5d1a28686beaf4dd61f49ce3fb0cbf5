@@ -1,5 +1,5 @@
 <template>
-  <h1>Currency Conversion</h1>
+  <h1>Currency Time Series</h1>
 
   <div class="grid">
     <div class="col">
@@ -52,7 +52,7 @@
       />
     </div>
     <div class="col-6">
-      <CustomChart />
+      <Chart type="line" :data="timeSeriesChartData" class="h-30rem" />
     </div>
   </div>
 </template>
@@ -61,7 +61,6 @@
 import { ref, computed, inject, onMounted } from "vue";
 import { convertObjectToDropdownData, outputDateFormatted } from "@/utils.js";
 import CustomDataTable from "@/components/CustomDataTable.vue";
-import CustomChart from "@/components/CustomChart.vue";
 import { currencyTimeSeriesColumns } from "@/data/columns";
 
 import { useToast } from "vue-toastification";
@@ -70,6 +69,7 @@ import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 import Button from "primevue/button";
 import MultiSelect from "primevue/multiselect";
+import Chart from "primevue/chart";
 
 const http = inject("http");
 const toast = useToast();
@@ -92,6 +92,10 @@ const timeSeriesTableData = ref([
     rate: null,
   },
 ]);
+const timeSeriesChartData = ref({
+  labels: [],
+  datasets: [],
+});
 
 const timeSeriesURl = computed(() => {
   return `/exchangerates_data/timeseries?start_date=${outputDateFormatted(
@@ -132,13 +136,15 @@ const minDateForEndDate = computed(() => {
 const onClickList = async () => {
   if (startDate.value && endDate.value) {
     const { data } = await http.get(timeSeriesURl.value);
-    timeSeriesTableData.value = transformData(data);
+    timeSeriesTableData.value = convertTableData(data);
+    timeSeriesChartData.value = convertToChartData(data);
+    console.log(timeSeriesChartData.value);
   } else {
     toast.error("Please select start and end date");
   }
 };
 
-const transformData = (data) => {
+const convertTableData = (data) => {
   const result = [];
 
   const dates = Object.keys(data.rates);
@@ -161,5 +167,27 @@ const transformData = (data) => {
   return result;
 };
 
-//tarihlerle ilgili olan alanların tamamını iki obje(reactive) ve bir watch ile yazdım ancak her değişiklikte 101 kere watchın çalışmasına sebep olduğu için daha kötü dursa da computedlar ile bu kısmı tamamladım.Vaktim olduğunda watchdaki döngü sorununun nasıl çözebileceğimi inceleyeceğim.
+const convertToChartData = (apiResponse) => {
+  const labels = Object.keys(apiResponse.rates).map((date) => {
+    const [year, month, day] = date.split("-");
+    return `${day}.${month}`;
+  });
+
+  const datasets = Object.keys(
+    apiResponse.rates[Object.keys(apiResponse.rates)[0]]
+  ).map((currency) => {
+    return {
+      label: currency,
+      data: Object.values(apiResponse.rates).map((date) => date[currency]),
+    };
+  });
+
+  return {
+    labels: labels,
+    datasets: datasets,
+  };
+};
+
+//tarihlerle ilgili olan alanların tamamını iki obje(reactive) ve bir watch ile yazdım ancak her değişiklikte 101 kere watchın
+//çalışmasına sebep olduğu için daha kötü dursa da computedlar ile bu kısmı tamamladım.Vaktim olduğunda watchdaki döngü sorununun nasıl çözebileceğimi inceleyeceğim.
 </script>
